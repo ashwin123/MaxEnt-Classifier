@@ -14,9 +14,9 @@ class MyMaxEnt(object):
 
 	def init_model(self):
 		'''
-		Initialises the model parameter v
+		Initialises the model parameter
 		'''
-		self.v = np.array([0]*10)
+		self.model = np.array([0]*10)
 
 	def cost(self,model):
 		'''
