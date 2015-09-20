@@ -44,7 +44,7 @@ class MyMaxEnt(object):
 		'''
 			Take the history tuple and the required tag as the input and return the probability
 		'''
-		return float(math.exp(np.dot(self.model,self.fvectors[(h,tag)])))/sum([math.exp(np.dot(self.model,self.fvectors[(h,tag)])) for tag in self.tags])
+		return float(math.exp(np.dot(self.model,self.fvectors[h][tag])))/sum([math.exp(np.dot(self.model,self.fvectors[h][tag])) for tag in self.tags])
 
 
 	def classify(self,h):
