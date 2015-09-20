@@ -13,13 +13,14 @@ class MyMaxEnt(object):
 		self.hist_list = hist_list
 		self.tags = tags
 		self.fvectors = self.create_dataset(feature_fn_list)
+		self.init_model()  # initialise the model
 		
 		s = np.array([0]*10)
 		temp = []
-		for(i in [self.fvectors[j].values() for j in self.fvectors.keys()]):
+		for i in [self.fvectors[j].values() for j in self.fvectors.keys()]:
 			for a in i:
 				temp.extend(a) #shouldn't this be append?
-		for(i in temp):
+		for i in temp:
 			np.add(s,np.array(i))
 		self.cum_f = s
 
@@ -35,7 +36,7 @@ class MyMaxEnt(object):
 		'''
 		# we need to return negative of cost		
 		L_of_v = sum([math.log(self.p_y_given_x(i,tag)) for i in self.fvectors.keys() for tag in self.tags])
-		return L_of_v
+		return -L_of_v
 
 	def train(self):
 		'''
@@ -82,7 +83,7 @@ class MyMaxEnt(object):
 		dataset = {k:{} for k in self.hist_list}
 		for i in self.hist_list:
 			for tag in self.tags:
-				dataset[i][tag] = np.array([fun() for fun in feature_fn_list])
+				dataset[i][tag] = np.array([fun(i,tag) for fun in feature_fn_list])
 		
 		return dataset
 		
