@@ -37,7 +37,7 @@ class MyMaxEnt(object):
 		'''
 			Train the classifier
 		'''
-		params = mymin(self.cost, self.model, method = 'L-BFGS-B', jac = gradient)
+		params = mymin(self.cost, self.model, method = 'L-BFGS-B', jac = gradient, disp = True)
 		self.model = params.x
 
 	def p_y_given_x(self,h,tag):
@@ -62,10 +62,11 @@ class MyMaxEnt(object):
 
 		return best_tag
 
-	def gradient(self):
+	def gradient(self, x):
 		'''
 			Maximizes the log-likelihood(Minimizes the negative)
 		'''
+		self.model = x
 		temp = np.array([0]*10)
 		for h in self.fvectors.keys():
 			for tag in fv.keys():
