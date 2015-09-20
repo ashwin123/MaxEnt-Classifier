@@ -78,7 +78,7 @@ class MyMaxEnt(object):
 		dataset = {k:v for k in self.hist_list for v in [{}]}
 		for i in self.hist_list:
 			for tag in self.tags:
-				dataset[i][tag] = [fun() for fun in feature_fn_list]
+				dataset[i][tag] = np.array([fun() for fun in feature_fn_list])
 		
 		return dataset
 		
