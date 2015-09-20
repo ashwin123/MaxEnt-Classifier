@@ -15,6 +15,7 @@ class MyMaxEnt(object):
 		self.fvectors = self.create_dataset(feature_fn_list)
 		
 		s = np.array([0]*10)
+		#Arvind needs to change for loop
 		for(i in self.fvectors.values()):
 			np.add(s,i)
 		self.cum_f = s
@@ -30,7 +31,7 @@ class MyMaxEnt(object):
 			Given the model, compute the cost 
 		'''
 		# return L(v)		
-		L_of_v = sum([math.log(self.p_y_given_x(i,tag)) for i in self.fvectors.keys() for tag in tags])
+		L_of_v = sum([math.log(self.p_y_given_x(i,tag)) for i in self.fvectors.keys() for tag in self.tags])
 		return L_of_v
 
 	def train(self):
