@@ -41,7 +41,7 @@ class MyMaxEnt(object):
 		'''
 			Train the classifier
 		'''
-		params = mymin(self.cost, self.model, method = 'L-BFGS-B', jac = gradient, disp = True)
+		params = mymin(self.cost, self.model, method = 'L-BFGS-B', jac = gradient, options = {'disp' : True})
 		self.model = params.x
 
 	def p_y_given_x(self,h,tag):
