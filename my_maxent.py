@@ -60,14 +60,14 @@ class MyMaxEnt(object):
 			Maximizes the log-likelihood(Minimizes the negative)
 		'''
 		
-	def load(model_file):
+	def load(self,model_file):
 		'''
 			Load the Max Ent model from the model file
 		'''
-		self.model = pickle.load(open(model_file))
+		return pickle.load(open(model_file))
 
-	def save(model_file):
+	def save(self,model_file):
 		'''
 			Save the model 
 		'''
-		pickle.dump(self.model,open((model_file),"w"))
+		pickle.dump(self,open((model_file),"w"))
