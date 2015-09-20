@@ -1,11 +1,12 @@
 import numpy as np
 from scipy.optimize import minimize as mymin 
+import pickle, math
 
 class MyMaxEnt(object):
 	'''
 		Python Class for the Maximum Entropy Classifier
 	'''
-	def __init__(self,hist_list,feature_fn_list,tags):
+	def __init__(self, hist_list, feature_fn_list, tags=["PERSON","ORGANIZATION","GPE","MONEY","DATE","TIME"]):
 		'''
 			Initialises the Max Ent model by producing the feature vectors for the training data
 		'''
@@ -17,7 +18,6 @@ class MyMaxEnt(object):
 		for(i in self.fvectors.values()):
 			np.add(s,i)
 		self.cum_f = s
-		
 
 	def init_model(self):
 		'''
@@ -29,11 +29,10 @@ class MyMaxEnt(object):
 		'''
 			Given the model, compute the cost 
 		'''
-		# return L(v)
-		
+		# return L(v)		
 		L_of_v = sum([math.log(self.p_y_given_x(i,tag)) for i in self.fvectors.keys() for tag in tags])
 		return L_of_v
-		
+
 	def train(self):
 		'''
 			Train the classifier
@@ -45,11 +44,23 @@ class MyMaxEnt(object):
 		'''
 			Take the history tuple and the required tag as the input and return the probability
 		'''
+		return float(math.exp(np.dot(self.model,self.fvectors[(h,tag)])))/sum([math.exp(np.dot(self.model,self.fvectors[(h,tag)])) for tag in self.tags])
+
 
 	def classify(self,h):
 		'''
 			Performs the classification by determining the tag that maximizes the probability
 		'''
+		max_prob = 0
+		best_tag = ""
+
+		for tag in self.tags:
+			prob = self.p_y_given_x(h,tag)
+			if prob > max_prob:
+				max_prob = prob
+				best_tag = tag
+
+		return best_tag
 
 	def gradient(self):
 		'''
@@ -69,3 +80,15 @@ class MyMaxEnt(object):
 				dataset[i][tag] = [fun() for fun in feature_fn_list]
 		
 		return dataset
+		
+	def load(self,model_file):
+		'''
+			Load the Max Ent model from the model file
+		'''
+		return pickle.load(open(model_file))
+
+	def save(self,model_file):
+		'''
+			Save the model 
+		'''
+		pickle.dump(self,open((model_file),"w"))
