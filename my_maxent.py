@@ -15,8 +15,11 @@ class MyMaxEnt(object):
 		self.fvectors = self.create_dataset(feature_fn_list)
 		
 		s = np.array([0]*10)
-		#Arvind needs to change for loop
-		for(i in self.fvectors.values()):
+		temp = []
+		for(i in [self.fvectors[j].values() for j in self.fvectors.keys()]):
+			for a in i:
+				temp.extend(a)
+		for(i in temp):
 			np.add(s,i)
 		self.cum_f = s
 
@@ -70,13 +73,13 @@ class MyMaxEnt(object):
 		self.model = x
 		temp = np.array([0]*10)
 		for h in self.fvectors.keys():
-			for tag in fv.keys():
+			for tag in h.keys():
 				np.add(temp, (self.fvectors[h][tag] * self.p_y_given_x(h, tag)))
 		derivative = temp - self.cum_f
 		return derivative
 		
 	def create_dataset(self, feature_fn_list):
-		dataset = {k:v for k in self.hist_list for v in [{}]}
+		dataset = {k:{} for k in self.hist_list}
 		for i in self.hist_list:
 			for tag in self.tags:
 				dataset[i][tag] = np.array([fun() for fun in feature_fn_list])
