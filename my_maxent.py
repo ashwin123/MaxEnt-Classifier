@@ -34,7 +34,8 @@ class MyMaxEnt(object):
 		'''
 			Given the model, compute the cost 
 		'''
-		# we need to return negative of cost		
+		# we need to return negative of cost
+		self.model = model		
 		L_of_v = sum([math.log(self.p_y_given_x(i,tag)) for i in self.fvectors.keys() for tag in self.tags])
 		return -L_of_v
 
@@ -42,7 +43,7 @@ class MyMaxEnt(object):
 		'''
 			Train the classifier
 		'''
-		params = mymin(self.cost, self.model, method = 'L-BFGS-B', jac = gradient, options = {'disp' : True})
+		params = mymin(self.cost, self.model, method = 'L-BFGS-B', options = {'disp' : True})
 		self.model = params.x
 
 	def p_y_given_x(self,h,tag):
@@ -74,7 +75,7 @@ class MyMaxEnt(object):
 		self.model = x
 		temp = np.array([0]*10)
 		for h in self.fvectors.keys():
-			for tag in h.keys():
+			for tag in self.tags:
 				np.add(temp, (self.fvectors[h][tag] * self.p_y_given_x(h, tag)))
 		derivative = temp - self.cum_f
 		return derivative

@@ -43,8 +43,8 @@ def f5(h,t):
 	'''
 		Organization followed by inc or corp
 	'''
-	print h[2][h[3]+1]
-	if(h[2][h[3]+1] in ["inc.","corp","inc","corp."]) and t == "ORGANIZATION":
+	#print h[2][h[3]+1]
+	if(h[3]+1<len(h[2]) and h[2][h[3]+1] in ["inc.","corp","inc","corp."]) and t == "ORGANIZATION":
 		return 1
 	else:
 		return 0	
@@ -60,7 +60,7 @@ def f7(h,t):
 		Organization followed by product model
 	'''
 	for i in range(1,4):
-		if(re.match(r'\d*\[a-zA-Z]+\d+',h[2][h[3]+i])) and t == "ORGANIZATION":
+		if h[3]+i<len(h[2]) and (re.match(r'\d*\[a-zA-Z]+\d+',h[2][h[3]+i])) and t == "ORGANIZATION":
 			return 1
 	else:
 		return 0
@@ -78,7 +78,7 @@ def f9(h,t):
 	'''
 		Person if next word is said,rebutted .....
 	'''
-	if(h[2][h[3]+1] in ["said","rebutted","told"]) and t == "PERSON":
+	if(h[3]+1<len(h[2]) and h[2][h[3]+1] in ["said","rebutted","told"]) and t == "PERSON":
 		return 1
 	else:
 		return 0	

@@ -6,20 +6,20 @@ def create_history(tags,tokens):
     for i in range(len(tokens)):
         for j in range(len(tokens[i])):
             if((j-2)<0):
-                u='*'
+                u = '*'
             else:
                 try:
-                    u=tags[tokens[i][j-2]]
+                    u = tags[tokens[i][j-2]]
                 except:
-                    u='OTHER'
+                    u = 'OTHER'
             if((j-1)<0):
-                v='*'
+                v = '*'
             else:
                 try:
-                    v=tags[tokens[i][j-1]]
+                    v = tags[tokens[i][j-1]]
                 except:
-                    v='OTHER'
-            x=(u,v,tokens[i],j)
+                    v ='OTHER'
+            x = (u,v,tokens[i],j)
             history.append(x)
     return history
 
@@ -29,20 +29,20 @@ with open('apple-iphone-5-first-look.txt', 'r') as f:
 sentences = nltk.sent_tokenize(sample)
 tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
 tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
-chunked_sentences=[]
+chunked_sentences = []
 for i in tagged_sentences:
     chunked_sentences.append(nltk.chunk.ne_chunk(i))
 
 def extract_entity_names(t):
     for n in t:
         if isinstance(n, nltk.tree.Tree):
-                tags[str(n).split("/")[0].split(" ")[1]]=n.label()
+                tags[str(n).split("/")[0].split(" ")[1]] = n.label()
 
 entity_names = []
-tags=dict()
+tags = dict()
 for tree in chunked_sentences:
     extract_entity_names(tree)
-h=create_history(tags,tokenized_sentences)
-f=open("history.txt","w")
+h = create_history(tags,tokenized_sentences)
+f = open("history.txt","w")
 f.write(str(h))
 f.close()
