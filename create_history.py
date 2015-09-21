@@ -19,7 +19,7 @@ def create_history(tags,tokens):
                     v = tags[tokens[i][j-1]]
                 except:
                     v ='OTHER'
-            x = (u,v,tokens[i],j)
+            x = (u,v,tuple(tokens[i]),j)
             history.append(x)
     return history
 
