@@ -88,6 +88,7 @@ def f10(h,t):
 		if in a window of 5 there is a stem with cost or price
 	'''
 	porter_stemmer = nltk.PorterStemmer()
+	#print 'sent : ',h[2]
 	for i in range(h[3]-5,h[3]):
 		#print h[2]
 		if (porter_stemmer.stem(h[2][i]) in ["price","pay","paid","cost","payment","buy","bought"]) and (t == "MONEY"):
