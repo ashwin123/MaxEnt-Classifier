@@ -95,5 +95,14 @@ def f10(h,t):
 	else:
 		return 0
 
+def f11(h,t):
+	'''
+	for OTHER
+	'''
+	if (not h[2][h[3]].istitle() or h[2][h[3]-1]==".") and (t == "OTHER"):
+		return 1
+	else:
+		return 0
+
 if __name__=="__main__":
 	print f10(("LOCATION","t1",nltk.word_tokenize("Hello there Ashwin is in Bangalore, India Microsoft bought X50 for Rs. 100."),14),"MONEY")

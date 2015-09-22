@@ -6,16 +6,17 @@ class MyMaxEnt(object):
 	'''
 		Python Class for the Maximum Entropy Classifier
 	'''
-	def __init__(self, hist_list, feature_fn_list, tags=["PERSON","ORGANIZATION","GPE","MONEY","DATE","TIME"]):
+	def __init__(self, hist_list, feature_fn_list, tags=["PERSON","ORGANIZATION","GPE","MONEY","DATE","TIME","OTHER"]):
 		'''
 			Initialises the Max Ent model by producing the feature vectors for the training data
 		'''
 		self.hist_list = hist_list
 		self.tags = tags
 		self.fvectors = self.create_dataset(feature_fn_list)
+		#print self.fvectors
 		self.init_model()  # initialise the model
 		
-		s = np.array([0]*10)
+		s = np.array([0]*11)
 		temp = []
 		for i in [self.fvectors[j].values() for j in self.fvectors.keys()]:
 			for a in i:
@@ -28,7 +29,7 @@ class MyMaxEnt(object):
 		'''
 			Initialises the model parameter
 		'''
-		self.model = np.array([0]*10)
+		self.model = np.array([0]*11)
 
 	def cost(self,model):
 		'''
@@ -62,10 +63,14 @@ class MyMaxEnt(object):
 
 		for tag in self.tags:
 			prob = self.p_y_given_x(h,tag)
+			print tag,prob
+			if max_prob == 0:
+				best_tag = "OTHER"
 			if prob > max_prob:
 				max_prob = prob
 				best_tag = tag
 
+		print max_prob
 		return best_tag
 
 	def gradient(self, x):
