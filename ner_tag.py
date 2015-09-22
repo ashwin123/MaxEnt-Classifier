@@ -90,26 +90,30 @@ if __name__ == "__main__":
     feature_fn_list = [f_fn.f1,f_fn.f2,f_fn.f3,f_fn.f4,f_fn.f5,f_fn.f6,f_fn.f7,f_fn.f8,f_fn.f9,f_fn.f10,f_fn.f11]
 
     ner_tagger = MyMaxEnt(hist_list,feature_fn_list)
-    #ner_tagger.train()
-    #ner_tagger.save("model_wo_gradient.pickle")
-    ner_tagger = ner_tagger.load("model_wo_gradient.pickle")
-    test_sample = eval(open("test_sentences.txt")).read()
-    #test_sample=" ".join(['Steve','Jobs','told','that','the','Apple', 'iPhone', 'is', 'a', 'new', 'addition', 'to', 'the', 'Apple','family','priced','at','$','41,000'])
+    ner_tagger.train()
+    ner_tagger.save("model_wo_gradient.pickle")
+    #ner_tagger = ner_tagger.load("model_wo_gradient.pickle")
+    tokenized_sentences = eval(open("test_sentences.txt").read())
+    sentences = []
+    for s in tokenized_sentences:
+        sentences.append(" ".join(s))
+    #test_sample = sentences    
+#test_sample=" ".join(['Steve','Jobs','told','that','the','Apple', 'iPhone', 'is', 'a', 'new', 'addition', 'to', 'the', 'Apple','family','priced','at','$','41,000'])
     #test_sample = str(raw_input('Enter a sentence : '))
-    sentences=nltk.sent_tokenize(test_sample)
-    tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
-
+    #sentences=nltk.sent_tokenize(test_sample)
+    #tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+	
     nltk_tagger()
     max_ent_test()
 
     print '###################################################'
     print " NEs Tagged by our Model : "
-    for i in my_tagged_sent[test_sample]:
-    	print i[0],' => ',i[1]
+    #for i in my_tagged_sent[test_sample]:
+    #	print i[0],' => ',i[1]
     print '###################################################'
     print "NEs Tagged by NLTK:"
-    for i in tagged_nltk[test_sample]:
-    	print i[0],' => ',i[1]
+    #for i in tagged_nltk[test_sample]:
+    #	print i[0],' => ',i[1]
     print '###################################################'
     test_accuracy()
     print '###################################################'

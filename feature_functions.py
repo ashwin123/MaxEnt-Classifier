@@ -91,8 +91,9 @@ def f10(h,t):
 	#print 'sent : ',h[2]
 	for i in range(h[3]-5,h[3]):
 		#print h[2]
-		if (porter_stemmer.stem(h[2][i]) in ["price","pay","paid","cost","payment","buy","bought"]) and (t == "MONEY"):
-			return 1
+                if(len(h[2]) >= 5):
+      		    if (porter_stemmer.stem(h[2][i]) in ["price","pay","paid","cost","payment","buy","bought"]) and (t == "MONEY"):
+		        return 1
 	else:
 		return 0
 

@@ -114,4 +114,4 @@ class MyMaxEnt(object):
 		'''
 			Save the model 
 		'''
-		pickle.dump(self,open((model_file),"w"))
+		pickle.dump(self,open((model_file),"wb"))
